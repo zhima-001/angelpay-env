@@ -14,5 +14,3 @@ patchesStrategicMerge:
   - deployment-patch.yaml
   - ingress-patch.yaml
 
-commonAnnotations:
-  redeploy: "$(date +%s)"
