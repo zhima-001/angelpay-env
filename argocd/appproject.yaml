@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: angelpay
+  namespace: argocd
+spec:
+  description: AngelPay project - 天使支付应用专用项目
+  sourceRepos:
+    - https://github.com/zhima-001/angelpay-env.git
+  destinations:
+    - namespace: angelpay-prod
+      server: https://kubernetes.default.svc
+    - namespace: angelpay-dev
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Secret
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: Pod
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: ReplicaSet
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: batch
+      kind: Job
+    - group: monitoring.coreos.com
+      kind: ServiceMonitor
+  roles:
+    - name: developer
+      description: Developer role - read-only access
+      policies:
+        - p, proj:angelpay:developer, applications, get, angelpay/*, allow
+        - p, proj:angelpay:developer, applications, sync, angelpay/*, allow
+    - name: admin
+      description: Admin role - full access
+      policies:
+        - p, proj:angelpay:admin, applications, *, angelpay/*, allow
+        - p, proj:angelpay:admin, repositories, *, angelpay/*, allow

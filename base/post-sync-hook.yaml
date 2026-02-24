@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: angelpay-post-sync-check
+  labels:
+    app: angelpay
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: smoke-test
+          image: curlimages/curl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "=== Post-sync smoke test ==="
+              echo "Testing /health endpoint..."
+              HTTP_CODE=$(curl -s -o /tmp/health.json -w "%{http_code}" http://angelpay.angelpay-prod.svc.cluster.local/health)
+              cat /tmp/health.json
+              echo ""
+              if [ "$HTTP_CODE" != "200" ]; then
+                echo "FAIL: /health returned $HTTP_CODE"
+                exit 1
+              fi
+              echo "OK: /health returned 200"
+
+              echo "Testing /ready endpoint..."
+              HTTP_CODE=$(curl -s -o /tmp/ready.json -w "%{http_code}" http://angelpay.angelpay-prod.svc.cluster.local/ready)
+              cat /tmp/ready.json
+              echo ""
+              if [ "$HTTP_CODE" != "200" ]; then
+                echo "WARN: /ready returned $HTTP_CODE (DB may not be ready)"
+              else
+                echo "OK: /ready returned 200"
+              fi
+
+              echo "=== Smoke test completed ==="
