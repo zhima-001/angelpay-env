@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: angelpay-config
+  labels:
+    app: angelpay
+data:
+  DB_HOST: "angelpay-mysql"
+  DB_PORT: "3306"
+  DB_NAME: "tianshi_ceshi_zhandian_kkwl"

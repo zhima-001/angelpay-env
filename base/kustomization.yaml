@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - configmap.yaml
+  - secret.yaml
+  - hpa.yaml
+  - networkpolicy.yaml
+
+commonLabels:
+  app.kubernetes.io/name: angelpay
+  app.kubernetes.io/managed-by: kustomize

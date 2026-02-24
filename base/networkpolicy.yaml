@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: angelpay
+  labels:
+    app: angelpay
+spec:
+  podSelector:
+    matchLabels:
+      app: angelpay
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector: {}
+      ports:
+        - protocol: TCP
+          port: 80
+  egress:
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 3306
+        - protocol: TCP
+          port: 53
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 443
