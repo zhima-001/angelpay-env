@@ -6,7 +6,8 @@ resources:
   - service.yaml
   - ingress.yaml
   - configmap.yaml
-  - secret.yaml
+  - configmap-dbconfig.yaml
+  # secret.yaml 不纳入 GitOps（密钥不落地），通过 kubectl create secret 管理
   - hpa.yaml
   - networkpolicy.yaml
 

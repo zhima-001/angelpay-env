@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: angelpay-dbconfig
+  labels:
+    app: angelpay
+data:
+  config.php: |
+    <?php
+    $dbconfig = array(
+        'host'   => getenv('DB_HOST') ?: 'localhost',
+        'port'   => intval(getenv('DB_PORT') ?: 3306),
+        'user'   => getenv('DB_USER') ?: 'root',
+        'pwd'    => getenv('DB_PASS') ?: '',
+        'dbname' => getenv('DB_NAME') ?: 'tianshi_ceshi_zhandian_kkwl',
+        'dbqz'   => 'pre_'
+    );

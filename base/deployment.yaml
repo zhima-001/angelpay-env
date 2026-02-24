@@ -66,6 +66,10 @@ spec:
             periodSeconds: 20
             timeoutSeconds: 5
             failureThreshold: 3
+          volumeMounts:
+            - name: dbconfig
+              mountPath: /app/config.php
+              subPath: config.php
           readinessProbe:
             httpGet:
               path: /ready
@@ -74,5 +78,9 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 3
+      volumes:
+        - name: dbconfig
+          configMap:
+            name: angelpay-dbconfig
       imagePullSecrets:
         - name: ghcr-pull-secret
