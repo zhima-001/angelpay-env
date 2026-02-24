@@ -1,4 +1,5 @@
 # angelpay-env — 天使支付环境仓库（GitOps）
+<!-- Test comment for GitOps verification -->
 
 ## 概述
 
