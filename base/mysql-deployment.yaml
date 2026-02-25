@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angelpay-mysql
+  labels:
+    app: angelpay-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angelpay-mysql
+  template:
+    metadata:
+      labels:
+        app: angelpay-mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: angelpay-secret
+                  key: DB_PASS
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: angelpay-config
+                  key: DB_NAME
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: angelpay-mysql
+  labels:
+    app: angelpay-mysql
+spec:
+  selector:
+    app: angelpay-mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+  type: ClusterIP
