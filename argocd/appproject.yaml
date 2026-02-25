@@ -12,12 +12,20 @@ spec:
       server: https://kubernetes.default.svc
     - namespace: angelpay-staging
       server: https://kubernetes.default.svc
-  clusterResourceWhitelist: []
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+    - group: ""
+      kind: PersistentVolume
   namespaceResourceWhitelist:
     - group: ""
       kind: ConfigMap
     - group: ""
       kind: PersistentVolumeClaim
+    - group: "rbac.authorization.k8s.io"
+      kind: Role
+    - group: "rbac.authorization.k8s.io"
+      kind: RoleBinding
     - group: ""
       kind: Secret
     - group: ""
