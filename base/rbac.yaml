@@ -1,0 +1,47 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: angelpay-readonly
+rules:
+- apiGroups: ["", "apps", "networking.k8s.io", "batch", "autoscaling"]
+  resources: ["pods", "pods/log", "deployments", "replicasets", "services", "ingress", "networkpolicies", "configmaps", "secrets", "persistentvolumeclaims", "jobs", "horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: angelpay-readonly-binding
+subjects:
+- kind: Group
+  name: angelpay-readers
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: angelpay-readonly
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: angelpay-publisher
+rules:
+- apiGroups: ["", "apps", "networking.k8s.io", "batch", "autoscaling"]
+  resources: ["pods", "deployments", "replicasets", "services", "ingress", "networkpolicies", "configmaps", "secrets", "persistentvolumeclaims", "jobs", "horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: angelpay-publisher-binding
+subjects:
+- kind: Group
+  name: angelpay-publishers
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: angelpay-publisher
+  apiGroup: rbac.authorization.k8s.io

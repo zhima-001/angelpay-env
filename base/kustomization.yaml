@@ -7,12 +7,15 @@ resources:
   - ingress.yaml
   - configmap.yaml
   - configmap-dbconfig.yaml
+  - mysql-pv.yaml
   - mysql-pvc.yaml
   - mysql-deployment.yaml
   # secret.yaml 不纳入 GitOps（密钥不落地），通过 kubectl create secret 管理
   - hpa.yaml
   - networkpolicy.yaml
+  - db-networkpolicy.yaml
   - post-sync-hook.yaml
+  - rbac.yaml
   # servicemonitor.yaml 需要 Prometheus Operator CRD，未安装时注释掉
   # - servicemonitor.yaml
   # rollout.yaml 需要 Argo Rollouts Controller，启用时替换 deployment.yaml

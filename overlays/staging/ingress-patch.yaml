@@ -6,7 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-    - host: prod.angelpay.local
+    - host: staging.angelpay.local
       http:
         paths:
           - path: /

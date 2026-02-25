@@ -10,12 +10,14 @@ spec:
   destinations:
     - namespace: angelpay-prod
       server: https://kubernetes.default.svc
-    - namespace: angelpay-dev
+    - namespace: angelpay-staging
       server: https://kubernetes.default.svc
   clusterResourceWhitelist: []
   namespaceResourceWhitelist:
     - group: ""
       kind: ConfigMap
+    - group: ""
+      kind: PersistentVolumeClaim
     - group: ""
       kind: Secret
     - group: ""

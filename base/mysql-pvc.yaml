@@ -11,3 +11,6 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: gp2
+  selector:
+    matchLabels:
+      app: angelpay

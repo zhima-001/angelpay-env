@@ -7,8 +7,8 @@ spec:
   generators:
     - list:
         elements:
-          - env: dev
-            namespace: angelpay-dev
+          - env: staging
+            namespace: angelpay-staging
           - env: prod
             namespace: angelpay-prod
   template:
@@ -18,7 +18,7 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: default
+      project: angelpay
       source:
         repoURL: https://github.com/zhima-001/angelpay-env.git
         targetRevision: main

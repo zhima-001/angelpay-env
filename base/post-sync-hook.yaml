@@ -22,7 +22,7 @@ spec:
             - |
               echo "=== Post-sync smoke test ==="
               echo "Testing /health endpoint..."
-              HTTP_CODE=$(curl -s -o /tmp/health.json -w "%{http_code}" http://angelpay.angelpay-prod.svc.cluster.local/health)
+              HTTP_CODE=$(curl -s -o /tmp/health.json -w "%{http_code}" http://angelpay:80/health)
               cat /tmp/health.json
               echo ""
               if [ "$HTTP_CODE" != "200" ]; then
@@ -32,11 +32,12 @@ spec:
               echo "OK: /health returned 200"
 
               echo "Testing /ready endpoint..."
-              HTTP_CODE=$(curl -s -o /tmp/ready.json -w "%{http_code}" http://angelpay.angelpay-prod.svc.cluster.local/ready)
+              HTTP_CODE=$(curl -s -o /tmp/ready.json -w "%{http_code}" http://angelpay:80/ready)
               cat /tmp/ready.json
               echo ""
               if [ "$HTTP_CODE" != "200" ]; then
-                echo "WARN: /ready returned $HTTP_CODE (DB may not be ready)"
+                echo "FAIL: /ready returned $HTTP_CODE"
+                exit 1
               else
                 echo "OK: /ready returned 200"
               fi

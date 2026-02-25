@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: angelpay
   source:
     repoURL: https://github.com/zhima-001/angelpay-env.git
     targetRevision: main
