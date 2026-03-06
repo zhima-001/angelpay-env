@@ -5,9 +5,9 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
+  ingressClassName: nginx
   rules:
-    - host: prod.angelpay.local
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
