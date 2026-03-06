@@ -8,7 +8,7 @@ resources:
 
 images:
   - name: ghcr.io/zhima-001/angelpay
-    newTag: "73af1ed"
+    newTag: "4ea122d"
 
 patchesStrategicMerge:
   - deployment-patch.yaml
